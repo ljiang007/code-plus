@@ -1,6 +1,11 @@
-<template>111111111111你好</template>
+<template>
+  <div>
+    <router-view></router-view>
+  </div>
+</template>
+
 <script setup lang="ts">
 </script>
-<style scoped>
 
+<style scoped>
 </style>

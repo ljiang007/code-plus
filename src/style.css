@@ -3,6 +3,9 @@
   font-size: 16px;
 }
 
+body {
+  margin: 0;
+}
 
 #app {
   max-width: 1920px;
