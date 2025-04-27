@@ -5,6 +5,7 @@
       :clone="cloneComponent"
       :group="{ name: 'components', pull: 'clone', put: false }"
       :sort="false"
+      item-key="type"
       class="draggable"
     >
       <template #item="{ element }">

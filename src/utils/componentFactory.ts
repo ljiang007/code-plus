@@ -39,6 +39,7 @@ export const componentMaps: ComponentMaps = {
         },
         attr: {},
       },
+      children: [],
     },
     {
       type: "image",

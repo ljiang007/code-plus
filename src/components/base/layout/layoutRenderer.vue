@@ -19,6 +19,7 @@
           :group="{ name: 'components', put: true }"
           :sort="true"
           class="draggable"
+          item-key="type"
           @add="(evt) => handleAdd(evt, child)"
         >
           <template #item="{ element }">
@@ -41,6 +42,8 @@ import { defineProps, defineEmits } from "vue";
 import draggable from "vuedraggable";
 import { getDefaultComponentProps } from "@/utils/componentDefaults";
 import ComponentRenderer from "@/components/ComponentRenderer.vue";
+
+import { componentMaps } from "@/utils/componentFactory";
 
 const emit = defineEmits<{
   (e: "select", id: any): void;
@@ -67,6 +70,17 @@ const handleAdd = (evt: any, column: any) => {
     const id = component.id || Date.now();
     const type = component.type;
 
+    // 从componentMaps中查找对应类型的组件配置
+    let componentConfig = null;
+    for (const category of Object.values(componentMaps)) {
+      const found = category.find(item => item.type === type);
+      if (found) {
+        componentConfig = found;
+        break;
+      }
+    }
+
+
     // 创建组件基本结构
     const base = {
       id,
@@ -74,21 +88,20 @@ const handleAdd = (evt: any, column: any) => {
       props: {},
       children: [],
     };
-    
-    // 获取默认属性并合并
-    const defaultProps = getDefaultComponentProps(type);
+
+
     const newComponent = {
       ...base,
-      ...defaultProps,
+      ...componentConfig,
       props: {
-        ...defaultProps.props,
-        ...component.props
-      }
+        ...componentConfig.props,
+        ...component.props,
+      },
     };
-    
+
     // Vue3写法：直接赋值即可
     column.children[newIndex] = newComponent;
-    
+
     console.log("新组件:", newComponent);
     console.log("列数据:", column);
   }
@@ -112,6 +125,5 @@ const handleAdd = (evt: any, column: any) => {
   min-height: 100px;
 }
 .draggable-item {
-
 }
 </style>
