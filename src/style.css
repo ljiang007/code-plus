@@ -8,6 +8,5 @@ body {
 }
 
 #app {
-  max-width: 1920px;
-  
+  height: 100vh;
 }
